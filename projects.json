@@ -1,0 +1,51 @@
+{
+  "source": "https://github.com/vishw094",
+  "exported": "2026-02-14",
+  "projects": [
+    {
+      "name": "Starbucks Recommender",
+      "repo": "Starbucks-Recommender",
+      "url": "https://github.com/vishw094/Starbucks-Recommender",
+      "description": "Starbucks visited UCLA Anderson and provided this problem statement to solve where we had to provide them a Recommender system that fetches user request and provides a list of recommendation on the basis of NDCG score.",
+      "language": "Python",
+      "created_at": "2026-02-15",
+      "updated_at": "2026-02-15"
+    },
+    {
+      "name": "Exoplanet Discovery",
+      "repo": "ExoplanetDiscovery",
+      "url": "https://github.com/vishw094/ExoplanetDiscovery",
+      "description": "This repo depicts the entire workflow to build a ML pipeline for detecting exoplanets in outer space by utilizing the NASA Kepler Dataset.",
+      "language": "Python",
+      "created_at": "2026-01-17",
+      "updated_at": "2026-01-17"
+    },
+    {
+      "name": "Heart Rate Calculation using Remote Photoplethysmography",
+      "repo": "Heart-Rate-Calculation-using-Remote-Photoplethysmography",
+      "url": "https://github.com/vishw094/Heart-Rate-Calculation-using-Remote-Photoplethysmography",
+      "description": "This project calculates your Heart rate using a web camera using Remote Photoplethysmography following a Gaussian pyramid.",
+      "language": "Python",
+      "created_at": "2025-08-01",
+      "updated_at": "2025-08-04"
+    },
+    {
+      "name": "Capturing SARS-CoV-2 Mutations with NLP",
+      "repo": "Capturing_SARS_CoV_2_Mutations_with_NLP",
+      "url": "https://github.com/vishw094/Capturing_SARS_CoV_2_Mutations_with_NLP",
+      "description": "My Research Project",
+      "language": null,
+      "created_at": "2025-05-05",
+      "updated_at": "2025-05-05"
+    },
+    {
+      "name": "Sales Vision",
+      "repo": "Sales-Vision",
+      "url": "https://github.com/vishw094/Sales-Vision",
+      "description": "AI-powered sales prediction dashboard with time-series analysis",
+      "language": null,
+      "created_at": null,
+      "updated_at": null
+    }
+  ]
+}
