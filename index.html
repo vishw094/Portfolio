@@ -17,6 +17,10 @@
   <header class="header">
     <nav class="nav">
       <a href="#" class="logo">VV</a>
+      <span class="status-pill" aria-label="Open to work">
+        <span class="status-dot"></span>
+        <span class="status-text">Open to work</span>
+      </span>
       <button class="nav-toggle" aria-label="Toggle menu">
         <span></span><span></span><span></span>
       </button>
@@ -35,7 +39,7 @@
     <section id="hero" class="hero">
       <div class="hero-inner">
         <div class="hero-text">
-          <p class="hero-greeting animate-in">Hi, I'm</p>
+          <p class="hero-greeting animate-in"><span class="hero-bracket">></span> Hi, I'm</p>
           <h1 class="hero-name animate-in" style="--i: 1"><span class="typed-text"></span><span class="cursor">|</span></h1>
           <p class="hero-tagline animate-in" style="--i: 2">
             Business Analytics &amp; Data Science · MSBA @ UCLA Anderson
@@ -47,6 +51,21 @@
             <a href="#contact" class="btn btn-primary">Get in touch</a>
             <a href="Vishw_Resume.pdf" class="btn btn-secondary" target="_blank" rel="noopener">Download resume</a>
           </div>
+          <div class="hero-terminal animate-in" style="--i: 5">
+            <div class="terminal-header">
+              <span class="terminal-dot"></span>
+              <span class="terminal-dot"></span>
+              <span class="terminal-dot"></span>
+              <span class="terminal-title">zsh — vishw@portfolio</span>
+            </div>
+            <div class="terminal-body">
+              <div class="terminal-line"><span class="t-prompt">$</span> whoami</div>
+              <div class="terminal-line terminal-output"><span class="t-output" id="terminal-whoami"></span><span class="t-cursor">|</span></div>
+              <div class="terminal-line"><span class="t-prompt">$</span> pwd</div>
+              <div class="terminal-line terminal-output"><span class="t-output" id="terminal-pwd"></span></div>
+              <div class="terminal-line"><span class="t-prompt">$</span> <span class="t-cursor" id="terminal-cursor">_</span></div>
+            </div>
+          </div>
         </div>
         <div class="hero-photo animate-in" style="--i: 2">
           <img src="assets/photo.png" alt="Vishw Vekariya" />
@@ -54,28 +73,25 @@
       </div>
     </section>
 
-    <!-- <section class="stats-section reveal">
-      <div class="stats-grid">
-        <div class="stat-item">
-          <span class="stat-number" data-target="5">0</span>
-          <span class="stat-label">Projects</span>
-        </div>
-        <div class="stat-item">
-          <span class="stat-number" data-target="3">0</span>
-          <span class="stat-label">Years Experience</span>
-        </div>
-        <div class="stat-item">
-          <span class="stat-number" data-target="20">0</span>
-          <span class="stat-label">Skills</span>
-        </div>
-      </div>
-    </section> -->
+    
     <section id="about" class="section reveal">
       <h2 class="section-title">About</h2>
       <div class="about-content">
         <p>
           Master's student in Business Analytics and Data Science at UCLA Anderson (Dec 2026), with a B.Tech in Computer Science from SVNIT. Experienced in building data pipelines with Airflow, Scala, and PySpark at MAQ Software for LinkedIn, and in developing ML models for resume screening and stock prediction. Skilled in Python, TensorFlow, XGBoost, and cloud platforms. Based in Los Angeles and open to relocate.
         </p>
+      </div>
+      <div class="code-snippet reveal">
+        <div class="code-snippet-header">
+          <span class="code-filename">about_me.py</span>
+        </div>
+        <pre class="code-block"><code><span class="line-num">1</span><span class="k">def</span> <span class="nf">get_profile</span>():
+<span class="line-num">2</span>    <span class="k">return</span> {
+<span class="line-num">3</span>        <span class="s">"role"</span>: <span class="s">"Data Engineer &amp; ML"</span>,
+<span class="line-num">4</span>        <span class="s">"stack"</span>: [<span class="s">"Python"</span>, <span class="s">"PySpark"</span>, <span class="s">"TensorFlow"</span>, <span class="s">"Airflow"</span>],
+<span class="line-num">5</span>        <span class="s">"location"</span>: <span class="s">"Los Angeles, CA"</span>,
+<span class="line-num">6</span>        <span class="s">"status"</span>: <span class="s">"Open to opportunities"</span>
+<span class="line-num">7</span>    }</code></pre>
       </div>
     </section>
 
@@ -147,6 +163,37 @@
 
     <section id="skills" class="section reveal">
       <h2 class="section-title">Skills</h2>
+      <div class="skill-bars reveal">
+        <div class="skill-bar-item">
+          <div class="skill-bar-label">
+            <span>Python / Data</span>
+            <span class="skill-bar-pct">90%</span>
+          </div>
+          <div class="skill-bar-track"><div class="skill-bar-fill" data-pct="90"></div></div>
+        </div>
+        <div class="skill-bar-item">
+          <div class="skill-bar-label">
+            <span>ML &amp; MLOps</span>
+            <span class="skill-bar-pct">85%</span>
+          </div>
+          <div class="skill-bar-track"><div class="skill-bar-fill" data-pct="85"></div></div>
+        </div>
+        <div class="skill-bar-item">
+          <div class="skill-bar-label">
+            <span>Data Pipelines / Cloud</span>
+            <span class="skill-bar-pct">80%</span>
+          </div>
+          <div class="skill-bar-track"><div class="skill-bar-fill" data-pct="80"></div></div>
+        </div>
+        <div class="skill-bar-item">
+          <div class="skill-bar-label">
+            <span>Full-stack &amp; Tools</span>
+            <span class="skill-bar-pct">75%</span>
+          </div>
+          <div class="skill-bar-track"><div class="skill-bar-fill" data-pct="75"></div></div>
+        </div>
+      </div>
+      <h3 class="skills-subtitle">Tech stack</h3>
       <div class="skills-grid reveal-children">
         <span class="skill-tag">Python</span>
         <span class="skill-tag">Java</span>
@@ -214,6 +261,10 @@
 
     <section id="contact" class="section contact-section reveal">
       <h2 class="section-title">Contact</h2>
+      <div class="activity-heatmap" aria-hidden="true">
+        <span class="heatmap-label">Last 12 weeks</span>
+        <div class="heatmap-grid" id="heatmap-grid"></div>
+      </div>
       <p class="contact-intro">Open to opportunities in data science, ML engineering, and analytics. Based in Los Angeles, open to relocate.</p>
       <div class="contact-links">
         <a href="mailto:vishwvekariya@gmail.com">vishwvekariya@gmail.com</a>
@@ -225,6 +276,7 @@
   </main>
 
   <footer class="footer">
+    <p class="footer-line"><span class="footer-comment">//</span> Built with HTML, CSS, JS · No frameworks</p>
     <p>© <span id="year"></span> Vishw Vekariya</p>
   </footer>
 

@@ -3,6 +3,11 @@
 
 Set-Location $PSScriptRoot
 
+# Set Git identity (required for first commit)
+Write-Host "Setting Git identity..." -ForegroundColor Cyan
+git config user.email "vishwvekariya@gmail.com"
+git config user.name "Vishw Vekariya"
+
 Write-Host "Adding files..." -ForegroundColor Cyan
 git add .
 

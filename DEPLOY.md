@@ -32,14 +32,14 @@ git push -u origin main
 ```
 Replace `YOUR_USERNAME` with your GitHub username (e.g. `vishw094`).
 
-### 5. Enable GitHub Pages
-- Open your repo on GitHub
-- Go to **Settings** → **Pages**
-- Under **Source**, choose **Deploy from a branch**
-- **Branch**: `main`, **Folder**: `/ (root)`
-- Click **Save**
+### 5. Enable GitHub Pages (required for the site to appear)
+1. Open **https://github.com/vishw094/Portfolio**
+2. Click **Settings** (top menu of the repo)
+3. In the left sidebar, click **Pages**
+4. Under **"Build and deployment"** → **Source**, select **Deploy from a branch**
+5. Under **Branch**: choose **main**, **Folder**: choose **/ (root)**
+6. Click **Save**
 
-Your site will be live at:
-**https://YOUR_USERNAME.github.io/vishw-portfolio/**
+Your site will be at: **https://vishw094.github.io/Portfolio/**
 
-(It may take 1–2 minutes to deploy.)
+(First deploy can take 1–3 minutes. Refresh the URL after waiting.)

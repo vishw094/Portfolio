@@ -26,6 +26,40 @@
     setTimeout(type, 600);
   }
 
+  // Terminal typing effect (whoami, pwd)
+  var whoamiEl = document.getElementById("terminal-whoami");
+  var pwdEl = document.getElementById("terminal-pwd");
+  var termCursor = document.getElementById("terminal-cursor");
+  if (whoamiEl && pwdEl) {
+    var whoamiText = "Vishw";
+    var pwdText = "/Users/vishw/portfolio";
+    var termDelay = 120;
+    function typeTerminal(el, str, done) {
+      var idx = 0;
+      function step() {
+        if (idx < str.length) {
+          el.textContent += str.charAt(idx);
+          idx++;
+          setTimeout(step, termDelay);
+        } else if (done) done();
+      }
+      step();
+    }
+    setTimeout(function () {
+      typeTerminal(whoamiEl, whoamiText, function () {
+        if (termCursor) termCursor.style.display = "none";
+        setTimeout(function () {
+          typeTerminal(pwdEl, pwdText, function () {
+            if (termCursor) {
+              termCursor.style.display = "inline";
+              termCursor.textContent = "_";
+            }
+          });
+        }, 400);
+      });
+    }, 2200);
+  }
+
   // Scroll progress bar
   var progressBar = document.querySelector(".scroll-progress");
   if (progressBar) {
@@ -64,6 +98,39 @@
   }, { threshold: 0.3 });
   var statsGrid = document.querySelector(".stats-grid");
   if (statsGrid) counterObserver.observe(statsGrid);
+
+  // Skill bar fill on scroll
+  var skillBars = document.querySelectorAll(".skill-bar-fill");
+  var barObserver = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        var pct = entry.target.getAttribute("data-pct");
+        if (pct) {
+          entry.target.style.setProperty("--fill-pct", pct + "%");
+          entry.target.classList.add("revealed");
+        }
+        barObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.2 });
+  skillBars.forEach(function (el) { barObserver.observe(el); });
+
+  // Activity heatmap (12 weeks x 7 days, random-ish levels)
+  var heatmapGrid = document.getElementById("heatmap-grid");
+  if (heatmapGrid) {
+    var totalCells = 12 * 7;
+    for (var w = 0; w < totalCells; w++) {
+      var cell = document.createElement("div");
+      cell.className = "heatmap-cell";
+      var r = Math.random();
+      if (r < 0.35) cell.classList.add("lvl-0");
+      else if (r < 0.6) cell.classList.add("lvl-1");
+      else if (r < 0.8) cell.classList.add("lvl-2");
+      else if (r < 0.92) cell.classList.add("lvl-3");
+      else cell.classList.add("lvl-4");
+      heatmapGrid.appendChild(cell);
+    }
+  }
 
   // Parallax effect on hero photo
   var heroPhoto = document.querySelector(".hero-photo img");
