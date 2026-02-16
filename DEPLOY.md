@@ -42,4 +42,4 @@ Replace `YOUR_USERNAME` with your GitHub username (e.g. `vishw094`).
 
 Your site will be at: **https://vishw094.github.io/Portfolio/**
 
-(First deploy can take 1–3 minutes. Refresh the URL after waiting.)
+(First deploy can take 1–3 minutes. After each push, wait 1–2 min then hard-refresh the URL: **Ctrl+Shift+R** or use a private window.)
