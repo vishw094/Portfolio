@@ -1,178 +1,259 @@
 (function () {
   "use strict";
 
-  var reduceMotion = window.matchMedia &&
-    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var GLYPHS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#%&*/<>+=";
+  function rand(s) { return s.charAt(Math.floor(Math.random() * s.length)); }
 
-  // Current year in footer
-  var yearEl = document.getElementById("year");
-  if (yearEl) yearEl.textContent = new Date().getFullYear();
+  // ----- Year -----
+  document.querySelectorAll(".year").forEach(function (el) { el.textContent = new Date().getFullYear(); });
 
-  // Terminal typing effect (whoami + current focus)
-  var whoamiEl = document.getElementById("terminal-whoami");
-  var focusEl = document.getElementById("terminal-pwd");
-  var termCursor = document.getElementById("terminal-cursor");
-  if (whoamiEl && focusEl) {
-    var whoamiText = "Vishw Vekariya, data + ML";
-    var focusText = "Pipelines, models, and the stories in the data.";
-    var termDelay = 55;
-
-    function typeTerminal(el, str, done) {
-      if (reduceMotion) { el.textContent = str; if (done) done(); return; }
-      var idx = 0;
-      (function step() {
-        if (idx < str.length) {
-          el.textContent += str.charAt(idx++);
-          setTimeout(step, termDelay);
-        } else if (done) {
-          done();
-        }
-      })();
+  // ----- Scramble text helper -----
+  // Animates `el` from whatever it shows now to `target`, revealing left to right.
+  function scrambleTo(el, target, opts) {
+    opts = opts || {};
+    var duration = opts.duration || 900;
+    if (reduceMotion) { el.textContent = target; return; }
+    var start = null;
+    var len = target.length;
+    function frame(t) {
+      if (!start) start = t;
+      var p = Math.min(1, (t - start) / duration);
+      var revealed = Math.floor(p * len);
+      var out = "";
+      for (var i = 0; i < len; i++) {
+        var c = target.charAt(i);
+        if (i < revealed || c === " ") out += c;
+        else out += '<span class="ch-glitch">' + rand(GLYPHS) + "</span>";
+      }
+      el.innerHTML = out;
+      if (p < 1) requestAnimationFrame(frame);
+      else el.textContent = target;
     }
-
-    setTimeout(function () {
-      typeTerminal(whoamiEl, whoamiText, function () {
-        if (termCursor) termCursor.style.display = "none";
-        setTimeout(function () {
-          typeTerminal(focusEl, focusText, function () {
-            if (termCursor) {
-              termCursor.style.display = "inline";
-              termCursor.textContent = "▋";
-            }
-          });
-        }, 350);
-      });
-    }, 1400);
+    requestAnimationFrame(frame);
   }
 
-  // Scroll progress bar
-  var progressBar = document.querySelector(".scroll-progress");
-  if (progressBar) {
-    window.addEventListener("scroll", function () {
-      var scrollTop = window.scrollY || document.documentElement.scrollTop;
-      var docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      var percent = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-      progressBar.style.width = percent + "%";
-    }, { passive: true });
+  // ----- Hero rows: cycle words with a decode effect -----
+  var rows = Array.prototype.slice.call(document.querySelectorAll(".scramble-row"));
+  rows.forEach(function (row, r) {
+    var words = row.getAttribute("data-words").split("|");
+    var width = words.reduce(function (m, w) { return Math.max(m, w.length); }, 0);
+    words = words.map(function (w) { return (w + "            ").slice(0, width); });
+    var i = 0;
+    row.textContent = words[0].replace(/\S/g, " ");
+    setTimeout(function () { scrambleTo(row, words[0], { duration: 1100 }); }, 250 + r * 260);
+    if (reduceMotion) return;
+    setTimeout(function tick() {
+      i = (i + 1) % words.length;
+      scrambleTo(row, words[i], { duration: 800 });
+      setTimeout(tick, 3600);
+    }, 3400 + r * 450);
+  });
+
+  // ----- Email: scramble on hover -----
+  var email = document.querySelector(".email");
+  if (email) {
+    var emailText = email.getAttribute("data-text");
+    email.addEventListener("mouseenter", function () { scrambleTo(email, emailText, { duration: 600 }); });
   }
 
-  // Skill bars fill on scroll
-  var skillBars = document.querySelectorAll(".skill-bar-fill");
-  if ("IntersectionObserver" in window) {
-    var barObserver = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          var pct = entry.target.getAttribute("data-pct");
-          if (pct) {
-            entry.target.style.setProperty("--fill-pct", pct + "%");
-            entry.target.classList.add("revealed");
+  // ----- ASCII band -----
+  var ascii = document.querySelector(".ascii");
+  if (ascii) {
+    var cells = [], cols = 0, rowsN = 0;
+    function buildAscii() {
+      var fs = parseFloat(getComputedStyle(ascii).fontSize) || 10;
+      var charW = fs * 0.6;
+      cols = Math.max(40, Math.floor((ascii.parentElement.clientWidth - 8) / charW));
+      rowsN = Math.max(14, Math.round(cols / 6.2));
+      var cvs = document.createElement("canvas");
+      var aspect = 1.75; // char cell is taller than wide
+      cvs.width = cols; cvs.height = Math.round(rowsN * aspect);
+      var ctx = cvs.getContext("2d");
+      ctx.fillStyle = "#000";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      var label = "DATA → ML";
+      var size = cvs.height * 0.95;
+      ctx.font = "800 " + size + "px Arial, sans-serif";
+      var w = ctx.measureText(label).width;
+      if (w > cols * 0.92) { size = size * (cols * 0.92) / w; ctx.font = "800 " + size + "px Arial, sans-serif"; }
+      ctx.fillText(label, cols / 2, cvs.height / 2 + size * 0.04);
+      var data = ctx.getImageData(0, 0, cvs.width, cvs.height).data;
+      cells = [];
+      for (var y = 0; y < rowsN; y++) {
+        var line = [];
+        var py = Math.min(cvs.height - 1, Math.round((y + 0.5) * aspect));
+        for (var x = 0; x < cols; x++) {
+          line.push(data[(py * cvs.width + x) * 4 + 3] > 110);
+        }
+        cells.push(line);
+      }
+      drawAscii();
+    }
+    function drawAscii() {
+      var html = "";
+      for (var y = 0; y < cells.length; y++) {
+        var cur = null, buf = "";
+        for (var x = 0; x < cells[y].length; x++) {
+          var on = cells[y][x];
+          var ch = on ? rand("#%@&$8") : (Math.random() < 0.025 ? rand("01") : "·");
+          if (on !== cur) {
+            if (cur !== null) html += '<span class="' + (cur ? "on" : "off") + '">' + buf + "</span>";
+            cur = on; buf = "";
           }
-          barObserver.unobserve(entry.target);
+          buf += ch;
         }
-      });
-    }, { threshold: 0.2 });
-    skillBars.forEach(function (el) { barObserver.observe(el); });
-  } else {
-    skillBars.forEach(function (el) {
-      var pct = el.getAttribute("data-pct");
-      if (pct) { el.style.setProperty("--fill-pct", pct + "%"); el.classList.add("revealed"); }
-    });
+        html += '<span class="' + (cur ? "on" : "off") + '">' + buf + "</span>\n";
+      }
+      ascii.innerHTML = html;
+    }
+    buildAscii();
+    var asciiTimer = null, asciiVisible = false;
+    if (!reduceMotion && "IntersectionObserver" in window) {
+      new IntersectionObserver(function (es) {
+        asciiVisible = es[0].isIntersecting;
+        if (asciiVisible && !asciiTimer) asciiTimer = setInterval(drawAscii, 160);
+        if (!asciiVisible && asciiTimer) { clearInterval(asciiTimer); asciiTimer = null; }
+      }).observe(ascii);
+    }
+    var rt;
+    window.addEventListener("resize", function () { clearTimeout(rt); rt = setTimeout(buildAscii, 200); });
   }
 
-  // Mobile nav toggle
-  var toggle = document.querySelector(".nav-toggle");
-  var links = document.querySelector(".nav-links");
-  if (toggle && links) {
-    toggle.addEventListener("click", function () {
-      toggle.classList.toggle("is-open");
-      links.classList.toggle("is-open");
-    });
-    links.querySelectorAll("a").forEach(function (a) {
-      a.addEventListener("click", function () {
-        toggle.classList.remove("is-open");
-        links.classList.remove("is-open");
-      });
-    });
+  // ----- Chrome: swap corner nav for pill nav after the hero -----
+  var chrome = document.querySelector(".chrome");
+  function onScroll() {
+    chrome.classList.toggle("scrolled", window.scrollY > window.innerHeight * 0.6);
   }
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
 
-  // Header shadow on scroll
-  var header = document.querySelector(".header");
-  if (header) {
-    window.addEventListener("scroll", function () {
-      var scroll = window.scrollY || document.documentElement.scrollTop;
-      header.classList.toggle("scrolled", scroll > 60);
-    }, { passive: true });
-  }
-
-  // Scroll reveal animations
+  // Active section in pill nav
+  var pillLinks = document.querySelectorAll(".pill-nav a");
   if ("IntersectionObserver" in window) {
-    var revealObserver = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("revealed");
-          revealObserver.unobserve(entry.target);
-        }
+    var secObs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        var id = e.target.id === "approach" ? "projects" : e.target.id;
+        pillLinks.forEach(function (a) { a.classList.toggle("active", a.getAttribute("href") === "#" + id); });
       });
-    }, { root: null, rootMargin: "0px 0px -60px 0px", threshold: 0.1 });
-    document.querySelectorAll(".reveal, .reveal-children").forEach(function (el) {
-      revealObserver.observe(el);
+    }, { rootMargin: "-45% 0px -50% 0px" });
+    document.querySelectorAll("main section[id]").forEach(function (s) { secObs.observe(s); });
+  }
+
+  // ----- Mobile menu -----
+  var menuBtn = document.querySelector(".menu-btn");
+  var menu = document.querySelector(".mobile-menu");
+  if (menuBtn && menu) {
+    function setMenu(open) {
+      menuBtn.setAttribute("aria-expanded", String(open));
+      menu.hidden = !open;
+      document.body.style.overflow = open ? "hidden" : "";
+    }
+    menuBtn.addEventListener("click", function () { setMenu(menu.hidden); });
+    menu.querySelectorAll("a").forEach(function (a) { a.addEventListener("click", function () { setMenu(false); }); });
+  }
+
+  // ----- Theme toggle -----
+  var themeBtn = document.querySelector(".theme-toggle");
+  if (themeBtn) {
+    themeBtn.addEventListener("click", function () {
+      var root = document.documentElement;
+      var current = root.getAttribute("data-theme") ||
+        (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+      var next = current === "dark" ? "light" : "dark";
+      root.setAttribute("data-theme", next);
+      try { localStorage.setItem("theme", next); } catch (e) {}
     });
+  }
+
+  // ----- Experience accordion -----
+  document.querySelectorAll(".xp").forEach(function (item) {
+    var body = item.querySelector(".xp-body");
+    // wrap body content in a single child so the grid-rows animation works
+    var inner = document.createElement("div");
+    inner.className = "xp-inner";
+    while (body.firstChild) inner.appendChild(body.firstChild);
+    body.appendChild(inner);
+    var btn = item.querySelector(".xp-row");
+    btn.addEventListener("click", function () {
+      var open = item.classList.toggle("is-open");
+      btn.setAttribute("aria-expanded", String(open));
+    });
+  });
+
+  // ----- Skills notebook filter -----
+  var chips = document.querySelectorAll(".chip");
+  var skillRows = document.querySelectorAll(".skills-table tbody tr");
+  var whereEl = document.querySelector(".nb-where");
+  var countEl = document.querySelector(".row-count");
+  function applyFilter(f) {
+    var n = 0;
+    skillRows.forEach(function (tr) {
+      var show = f === "all" || tr.getAttribute("data-domain") === f;
+      tr.classList.toggle("is-hidden", !show);
+      if (show) {
+        tr.querySelector(".idx").textContent = n++;
+        if (!reduceMotion) {
+          var cap = tr.querySelector(".cap");
+          scrambleTo(cap, cap.getAttribute("data-label") || (cap.setAttribute("data-label", cap.textContent), cap.textContent), { duration: 450 });
+        }
+      }
+    });
+    if (countEl) countEl.textContent = n;
+    if (whereEl) whereEl.textContent = f === "all" ? "" : "\n WHERE domain = '" + f + "'";
+  }
+  skillRows.forEach(function (tr) { var c = tr.querySelector(".cap"); c.setAttribute("data-label", c.textContent); });
+  chips.forEach(function (chip) {
+    chip.addEventListener("click", function () {
+      chips.forEach(function (c) { c.classList.toggle("is-on", c === chip); });
+      applyFilter(chip.getAttribute("data-filter"));
+    });
+  });
+  applyFilter("all");
+
+  // bars stagger
+  document.querySelectorAll(".bars i").forEach(function (b, i) { b.style.setProperty("--d", i * 80); });
+
+  // ----- Scroll reveal -----
+  var reveals = document.querySelectorAll(".reveal");
+  if ("IntersectionObserver" in window && !reduceMotion) {
+    var ro = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add("revealed"); ro.unobserve(e.target); }
+      });
+    }, { rootMargin: "0px 0px -60px 0px", threshold: 0.08 });
+    reveals.forEach(function (el) { ro.observe(el); });
   } else {
-    document.querySelectorAll(".reveal, .reveal-children").forEach(function (el) {
-      el.classList.add("revealed");
-    });
+    reveals.forEach(function (el) { el.classList.add("revealed"); });
   }
 
-  // Active nav link on scroll
-  var sections = document.querySelectorAll("section[id]");
-  var navLinks = document.querySelectorAll(".nav-links a[href^='#']");
-  if (sections.length && navLinks.length) {
-    window.addEventListener("scroll", function () {
-      var scrollY = window.scrollY + 150;
-      sections.forEach(function (section) {
-        var top = section.offsetTop;
-        var height = section.offsetHeight;
-        var id = section.getAttribute("id");
-        if (id && scrollY >= top && scrollY < top + height) {
-          navLinks.forEach(function (link) {
-            link.classList.toggle("active", link.getAttribute("href") === "#" + id);
-          });
-        }
-      });
-    }, { passive: true });
-  }
-
-  // Visit notification: email on view (with coarse IP location) when a Formspree ID is set
+  // ----- Optional visit notification (set a Formspree ID in index.html to enable) -----
   (function () {
-    var formIdMeta = document.querySelector('meta[name="formspree-form-id"]');
-    var formId = formIdMeta ? formIdMeta.getAttribute("content") : "";
+    var meta = document.querySelector('meta[name="formspree-form-id"]');
+    var formId = meta ? meta.getAttribute("content") : "";
     if (!formId || formId === "YOUR_FORM_ID") return;
     try {
       if (sessionStorage.getItem("visitNotified")) return;
       sessionStorage.setItem("visitNotified", "1");
     } catch (e) { return; }
     function sendVisit(data) {
-      var body = {
-        _subject: "Portfolio visitor - " + (data.city || data.country_name || "Unknown"),
-        message: [
-          "New visit to your portfolio",
-          "",
-          "Location: " + (data.city ? data.city + ", " : "") + (data.region || "") + " " + (data.country_name || ""),
-          "Country code: " + (data.country_code || "-"),
-          "IP: " + (data.ip || "-"),
-          "Time: " + new Date().toISOString(),
-          "User agent: " + (navigator.userAgent || "-")
-        ].join("\n")
-      };
       fetch("https://formspree.io/f/" + formId, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body)
+        body: JSON.stringify({
+          _subject: "Portfolio visitor - " + (data.city || data.country_name || "Unknown"),
+          message: [
+            "New visit to your portfolio", "",
+            "Location: " + (data.city ? data.city + ", " : "") + (data.region || "") + " " + (data.country_name || ""),
+            "Time: " + new Date().toISOString(),
+            "User agent: " + (navigator.userAgent || "-")
+          ].join("\n")
+        })
       }).catch(function () {});
     }
-    fetch("https://ipapi.co/json/")
-      .then(function (r) { return r.json(); })
-      .then(sendVisit)
-      .catch(function () { sendVisit({ ip: "unknown", country_name: "Unknown" }); });
+    fetch("https://ipapi.co/json/").then(function (r) { return r.json(); }).then(sendVisit)
+      .catch(function () { sendVisit({ country_name: "Unknown" }); });
   })();
 })();

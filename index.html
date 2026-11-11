@@ -3,353 +3,435 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Vishw Vekariya | Data &amp; ML</title>
-  <meta name="description" content="Vishw Vekariya, data engineer and ML practitioner. MSBA at UCLA Anderson. Building pipelines, predictive models, and AI applications." />
+  <title>Vishw Vekariya · Data &amp; ML</title>
+  <meta name="description" content="Vishw Vekariya, data engineer and ML builder. MSBA at UCLA Anderson. Pipelines, models, and AI agents that people actually use." />
+  <meta property="og:title" content="Vishw Vekariya · Data &amp; ML" />
+  <meta property="og:description" content="Data engineer and ML builder. Pipelines, models, and AI agents that people actually use." />
+  <meta property="og:image" content="assets/photo.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
+  <script>
+    // Apply saved theme before paint to avoid a flash
+    try { var t = localStorage.getItem("theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}
+  </script>
   <!-- Replace content with your Formspree form ID (from formspree.io) to get email when someone visits -->
   <meta name="formspree-form-id" content="YOUR_FORM_ID" />
 </head>
 <body>
-  <div class="scroll-progress" aria-hidden="true"></div>
+  <!-- Hand-drawn wobble filter used by every sketchy border on the page -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="7" />
+      <feDisplacementMap in="SourceGraphic" scale="3.5" />
+    </filter>
+    <filter id="rough-strong">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3" />
+      <feDisplacementMap in="SourceGraphic" scale="6" />
+    </filter>
+  </svg>
 
-  <header class="header">
-    <nav class="nav">
-      <a href="#" class="logo">Vishw<span class="logo-dot">.</span></a>
-      <span class="status-pill" aria-label="Open to work">
-        <span class="status-dot"></span>
-        <span class="status-text">Open to work</span>
-      </span>
-      <button class="nav-toggle" aria-label="Toggle menu">
-        <span></span><span></span><span></span>
-      </button>
-      <ul class="nav-links">
-        <li><a href="#about">About</a></li>
-        <li><a href="#experience">Experience</a></li>
-        <li><a href="#education">Education</a></li>
-        <li><a href="#skills">Skills</a></li>
-        <li><a href="#projects">Projects</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
+  <!-- ===== Fixed chrome ===== -->
+  <header class="chrome">
+    <nav class="corner-nav mono" aria-label="Sections">
+      <a href="#about">About</a>
+      <a href="#experience">Experience</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#approach">Approach</a>
     </nav>
+
+    <a href="#top" class="brand">Vishw Vekariya</a>
+
+    <nav class="pill-nav" aria-label="Sections (compact)">
+      <a href="#about">About</a>
+      <a href="#experience">Experience</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact</a>
+    </nav>
+
+    <div class="chrome-right">
+      <button class="theme-toggle" type="button" aria-label="Toggle dark mode">
+        <svg class="i-sun" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg>
+        <svg class="i-moon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z"/></svg>
+      </button>
+      <a href="#contact" class="say-hi mono">
+        <span class="say-hi-text">Get in touch</span>
+        <span class="say-hi-circle" aria-hidden="true">↗</span>
+      </a>
+    </div>
+
+    <button class="menu-btn" type="button" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
   </header>
 
-  <main>
-    <section id="hero" class="hero">
-      <div class="hero-inner">
-        <div class="hero-text">
-          <p class="hero-greeting animate-in">Hello, I'm</p>
-          <h1 class="hero-name animate-in" style="--i: 1">Vishw Vekariya</h1>
-          <p class="hero-tagline animate-in" style="--i: 2">
-            I build data pipelines and machine-learning systems,<span class="tagline-em"> and I like making them genuinely useful.</span>
+  <div class="mobile-menu" hidden>
+    <a href="#about">01 About</a>
+    <a href="#experience">02 Experience</a>
+    <a href="#skills">03 Skills</a>
+    <a href="#projects">04 Projects</a>
+    <a href="#approach">05 Approach</a>
+    <a href="#contact">06 Contact</a>
+  </div>
+
+  <main id="top">
+    <!-- ===== Hero ===== -->
+    <section class="hero" aria-label="Intro">
+      <h1 class="sr-only">Vishw Vekariya, data engineer and ML builder. Raw data to pipelines to decisions.</h1>
+
+      <svg class="hero-doodle" viewBox="0 0 220 120" aria-hidden="true">
+        <g filter="url(#rough)" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M10 108 H210" />
+          <path d="M14 108 V10" />
+          <path class="draw" d="M16 96 C40 92, 50 70, 72 74 S104 40, 128 52 S168 18, 204 14" />
+        </g>
+        <circle class="doodle-dot" cx="204" cy="14" r="4.5" />
+        <text x="150" y="44" class="doodle-note">↗ ship it</text>
+      </svg>
+
+      <div class="scramble-block mono" aria-hidden="true">
+        <div class="scramble-row" data-words="RAW DATA|MESSY LOGS|EVENT FEED|SAP EXPORTS"></div>
+        <div class="scramble-row indent" data-words="PIPELINES|ML MODELS|AI AGENTS|DASHBOARDS"></div>
+        <div class="scramble-row" data-words="DECISIONS|ADOPTION|REAL IMPACT|CLARITY"></div>
+      </div>
+
+      <p class="hero-sub mono"><span class="dash">—</span> DATA ENGINEER &amp; ML BUILDER</p>
+
+      <div class="hero-bar mono">
+        <span class="hb-left">INGEST · MODEL · SHIP</span>
+        <a href="#about" class="hb-mid">SCROLL TO VIEW MORE ↓</a>
+        <span class="hb-right"><span class="live-dot"></span> OPEN TO WORK &nbsp; ©<span class="year"></span></span>
+      </div>
+    </section>
+
+    <!-- ===== 01 About ===== -->
+    <section id="about" class="section">
+      <div class="section-label mono reveal"><span>01 — ABOUT</span><span>LOS ANGELES, CA</span></div>
+
+      <div class="about-grid">
+        <div class="about-copy">
+          <h2 class="big-head reveal">I build the pipeline,<br /><mark>train the model</mark>, and make sure <span class="squiggle">someone uses it.</span></h2>
+
+          <p class="lead reveal">
+            <strong>Data is only useful once it changes a decision.</strong> I like owning the whole path:
+            messy ingestion at the bottom, a model that holds up in the middle, and a story at the top that a team can act on.
           </p>
-          <p class="hero-bio animate-in" style="--i: 3">
-            Currently a Master's student in Business Analytics &amp; Data Science at
-            <strong>UCLA Anderson</strong>. Before this I was a data engineer working on
-            LinkedIn's flagship backend. I care about clean pipelines, models that hold up
-            in the real world, and explaining the why behind the numbers.
+          <p class="reveal">
+            I'm finishing an <strong>MS in Business Analytics at UCLA Anderson</strong> (Dec 2026). Before that I was a data engineer at
+            MAQ Software on <strong>LinkedIn's flagship backend</strong>, building Airflow DAGs in Scala and PySpark. Along the way I've
+            shipped models for <span class="mono-chip">RESUME SCREENING<sup>01</sup></span>, <span class="mono-chip">STOCK FORECASTING<sup>02</sup></span>,
+            <span class="mono-chip">EXOPLANET DETECTION<sup>03</sup></span> and a <span class="mono-chip">MULTI-AGENT OPS PLANNER<sup>04</sup></span>.
           </p>
-          <div class="hero-cta animate-in" style="--i: 4">
-            <a href="#contact" class="btn btn-primary">Get in touch</a>
-            <a href="Vishw_Resume.pdf" class="btn btn-secondary" target="_blank" rel="noopener">Download resume</a>
-          </div>
-          <div class="hero-terminal animate-in" style="--i: 5">
-            <div class="terminal-header">
-              <span class="terminal-dot"></span>
-              <span class="terminal-dot"></span>
-              <span class="terminal-dot"></span>
-              <span class="terminal-title">vishw@portfolio ~ %</span>
-            </div>
-            <div class="terminal-body">
-              <div class="terminal-line"><span class="t-prompt">$</span> whoami</div>
-              <div class="terminal-line terminal-output"><span class="t-output" id="terminal-whoami"></span><span class="t-cursor">▋</span></div>
-              <div class="terminal-line"><span class="t-prompt">$</span> cat current_focus.txt</div>
-              <div class="terminal-line terminal-output"><span class="t-output" id="terminal-pwd"></span></div>
-              <div class="terminal-line"><span class="t-prompt">$</span> <span class="t-cursor" id="terminal-cursor">▋</span></div>
-            </div>
+          <p class="reveal">Based in Los Angeles and happy to relocate for the right team.</p>
+
+          <div class="hero-cta reveal">
+            <a href="#contact" class="btn btn-solid">Say hello</a>
+            <a href="Vishw_Resume.pdf" class="btn btn-ghost" target="_blank" rel="noopener">Resume ↗</a>
           </div>
         </div>
-        <div class="hero-photo animate-in" style="--i: 2">
-          <img src="assets/photo.png" alt="Portrait of Vishw Vekariya" />
-        </div>
+
+        <figure class="portrait reveal">
+          <div class="sketch-frame tilt">
+            <img src="assets/photo.png" alt="Portrait of Vishw Vekariya" loading="lazy" />
+          </div>
+          <figcaption class="mono">FIG. 1 — THE HUMAN BEHIND THE DAGS</figcaption>
+        </figure>
+      </div>
+
+      <div class="sources reveal">
+        <p class="mono sources-title">SOURCES</p>
+        <ol class="sources-list mono">
+          <li>
+            <span class="src-num">[1]</span>
+            <span class="src-text"><em>MS, Business Analytics &amp; Data Science</em> — UCLA Anderson School of Management</span>
+            <span class="src-date">2025—2026.12</span>
+          </li>
+          <li>
+            <span class="src-num">[2]</span>
+            <span class="src-text"><em>B.Tech, Computer Science &amp; Engineering</em> — SVNIT Surat</span>
+            <span class="src-date">2021—2025.06</span>
+          </li>
+        </ol>
       </div>
     </section>
 
-    <section id="about" class="section reveal">
-      <h2 class="section-title"><span class="section-num">01</span> About</h2>
-      <div class="about-content">
-        <p class="about-lead">
-          I'm a data engineer and ML practitioner who enjoys the whole stack, from the
-          messy ingestion at the bottom to the model and the story at the top.
-        </p>
-        <p>
-          I'm finishing my Master's in Business Analytics &amp; Data Science at UCLA Anderson
-          (Dec 2026), after a B.Tech in Computer Science from SVNIT. Most recently I built
-          data pipelines with Airflow, Scala, and PySpark at MAQ Software for LinkedIn, and
-          along the way I've shipped ML models for resume screening and stock forecasting.
-          I'm based in Los Angeles and happy to relocate for the right team.
-        </p>
-      </div>
-      <div class="code-snippet reveal">
-        <div class="code-snippet-header">
-          <span class="code-dot"></span><span class="code-dot"></span><span class="code-dot"></span>
-          <span class="code-filename">about_me.py</span>
-        </div>
-        <pre class="code-block"><code><span class="line-num">1</span><span class="k">def</span> <span class="nf">get_profile</span>():
-<span class="line-num">2</span>    <span class="k">return</span> {
-<span class="line-num">3</span>        <span class="s">"role"</span>: <span class="s">"Data Engineer &amp; ML"</span>,
-<span class="line-num">4</span>        <span class="s">"stack"</span>: [<span class="s">"Python"</span>, <span class="s">"PySpark"</span>, <span class="s">"TensorFlow"</span>, <span class="s">"Airflow"</span>],
-<span class="line-num">5</span>        <span class="s">"location"</span>: <span class="s">"Los Angeles, CA"</span>,
-<span class="line-num">6</span>        <span class="s">"status"</span>: <span class="s">"Open to opportunities"</span>
-<span class="line-num">7</span>    }</code></pre>
+    <!-- ===== ASCII band ===== -->
+    <section class="band band-yellow" aria-label="Raw to refined">
+      <pre class="ascii mono" aria-hidden="true"></pre>
+      <div class="band-caption mono">
+        <span>FIG. 2 — RAW → REFINED</span>
+        <span class="band-steps"><b>INGEST</b> → <i>MODEL</i> → <i>SHIP</i></span>
       </div>
     </section>
 
-    <section id="experience" class="section reveal">
-      <h2 class="section-title"><span class="section-num">02</span> Experience</h2>
-      <div class="timeline">
-        <article class="timeline-item reveal">
-          <div class="timeline-marker"></div>
-          <div class="timeline-content">
-            <span class="timeline-date">Jan 2025 to Jun 2025</span>
-            <h3>Associate Software Engineer, Data Engineer</h3>
-            <p class="timeline-company">MAQ Software / LinkedIn · Noida, India</p>
+    <!-- ===== 02 Experience ===== -->
+    <section id="experience" class="section">
+      <div class="section-label mono reveal"><span>02 — EXPERIENCE</span><span>3 ROLES · 2023—2025</span></div>
+      <h2 class="big-head reveal">Where I've <mark>shipped</mark>.</h2>
+
+      <div class="term reveal">
+        <div class="term-head mono"><span class="dots"><i></i><i></i><i></i></span> vishw@career ~ % git log --oneline --author=vishw</div>
+      </div>
+
+      <ol class="xp-list">
+        <li class="xp reveal is-open">
+          <button class="xp-row" type="button" aria-expanded="true">
+            <span class="xp-hash mono">a7f3c21</span>
+            <span class="xp-main">
+              <span class="xp-role">Associate Software Engineer, Data</span>
+              <span class="xp-org mono">MAQ SOFTWARE × LINKEDIN · NOIDA</span>
+            </span>
+            <span class="xp-date mono">2025.01—2025.06</span>
+            <span class="xp-plus" aria-hidden="true">+</span>
+          </button>
+          <div class="xp-body">
             <ul>
-              <li>Engineered 15 distinct Airflow DAGs for LinkedIn's Flagship Backend team using Scala and PySpark to automate data-transformation workflows, reaching a 97% execution success rate.</li>
-              <li>Integrated Azure Pipelines and Logic Apps to trigger email alerts for critical reporting workflows, improving report accuracy by 15%.</li>
+              <li>Engineered <b>15 Airflow DAGs</b> for LinkedIn's Flagship Backend team in Scala and PySpark to automate data-transformation workflows, reaching a <b>97% execution success rate</b>.</li>
+              <li>Wired Azure Pipelines and Logic Apps into email alerts for critical reporting workflows, improving report accuracy by <b>15%</b>.</li>
             </ul>
+            <p class="xp-tags mono">AIRFLOW / SCALA / PYSPARK / AZURE PIPELINES / LOGIC APPS</p>
           </div>
-        </article>
-        <article class="timeline-item reveal">
-          <div class="timeline-marker"></div>
-          <div class="timeline-content">
-            <span class="timeline-date">May 2024 to Jul 2024</span>
-            <h3>Software Engineer Intern</h3>
-            <p class="timeline-company">Reliance Industries Ltd. · Mumbai, India</p>
+        </li>
+        <li class="xp reveal">
+          <button class="xp-row" type="button" aria-expanded="false">
+            <span class="xp-hash mono">4e19b08</span>
+            <span class="xp-main">
+              <span class="xp-role">Software Engineer Intern</span>
+              <span class="xp-org mono">RELIANCE INDUSTRIES · MUMBAI</span>
+            </span>
+            <span class="xp-date mono">2024.05—2024.07</span>
+            <span class="xp-plus" aria-hidden="true">+</span>
+          </button>
+          <div class="xp-body">
             <ul>
-              <li>Led adoption of Angular CLI and Spring Boot for the Visitor Management System, improving maintainability and team efficiency by 20% and accelerating delivery for 10,000+ daily visitor entries.</li>
-              <li>Developed an OpenCV module to automate visitor-card data capture with 98% accuracy, reducing manual entry errors and strengthening security compliance.</li>
+              <li>Led adoption of Angular CLI and Spring Boot for the Visitor Management System, improving maintainability and team efficiency by <b>20%</b> for <b>10,000+ daily visitor entries</b>.</li>
+              <li>Built an OpenCV module that captures visitor-card data automatically with <b>98% accuracy</b>, cutting manual entry errors and tightening security compliance.</li>
             </ul>
+            <p class="xp-tags mono">ANGULAR / SPRING BOOT / OPENCV</p>
           </div>
-        </article>
-        <article class="timeline-item reveal">
-          <div class="timeline-marker"></div>
-          <div class="timeline-content">
-            <span class="timeline-date">May 2023 to Aug 2023</span>
-            <h3>Machine Learning Intern</h3>
-            <p class="timeline-company">Techs Network · Bengaluru, India</p>
+        </li>
+        <li class="xp reveal">
+          <button class="xp-row" type="button" aria-expanded="false">
+            <span class="xp-hash mono">c02d5e7</span>
+            <span class="xp-main">
+              <span class="xp-role">Machine Learning Intern</span>
+              <span class="xp-org mono">TECHS NETWORK · BENGALURU</span>
+            </span>
+            <span class="xp-date mono">2023.05—2023.08</span>
+            <span class="xp-plus" aria-hidden="true">+</span>
+          </button>
+          <div class="xp-body">
             <ul>
-              <li>Built a resume-screening model with TensorFlow and XGBoost, reaching 95% accuracy in identifying qualified candidates.</li>
-              <li>Tuned an LSTM model in TensorFlow for a 12% improvement in stock-prediction accuracy over baseline.</li>
+              <li>Built a resume-screening model with TensorFlow and XGBoost reaching <b>95% accuracy</b> at identifying qualified candidates.</li>
+              <li>Tuned an LSTM in TensorFlow for a <b>12% lift</b> in stock-prediction accuracy over baseline.</li>
             </ul>
+            <p class="xp-tags mono">TENSORFLOW / XGBOOST / LSTM / NLP</p>
           </div>
-        </article>
+        </li>
+      </ol>
+    </section>
+
+    <!-- ===== 03 Skills (notebook) ===== -->
+    <section id="skills" class="section">
+      <div class="section-label mono reveal"><span>03 — SKILLS</span><span>QUERY ME</span></div>
+
+      <div class="nb reveal">
+        <div class="nb-cell sketch-box">
+          <span class="nb-prompt mono">In [1]:</span>
+          <pre class="nb-code mono"><span class="c">-- what I work with, and the tools behind it</span>
+<span class="k">SELECT</span> capability, tools, domain
+  <span class="k">FROM</span> vishw.skills<span class="nb-where"></span>;</pre>
+          <div class="chips mono" role="group" aria-label="Filter by domain">
+            <span class="chips-label">DOMAIN</span>
+            <button class="chip is-on" data-filter="all">All</button>
+            <button class="chip" data-filter="data">Data</button>
+            <button class="chip" data-filter="ml">ML</button>
+            <button class="chip" data-filter="ai">AI</button>
+            <button class="chip" data-filter="eng">Eng</button>
+          </div>
+        </div>
+
+        <div class="nb-out">
+          <span class="nb-prompt out mono">Out[1]:</span>
+          <table class="skills-table">
+            <thead class="mono"><tr><th></th><th>capability</th><th>tools</th><th>domain</th></tr></thead>
+            <tbody>
+              <tr data-domain="data"><td class="mono idx"></td><td class="cap">Data Engineering</td><td class="mono tools">AIRFLOW / PYSPARK / SCALA / MEDALLION ETL / SNOWFLAKE / DUCKDB</td><td class="mono dom">DATA</td></tr>
+              <tr data-domain="ml"><td class="mono idx"></td><td class="cap">Machine Learning</td><td class="mono tools">SCIKIT-LEARN / XGBOOST / TENSORFLOW / CNN / LSTM / FEATURE ENGINEERING</td><td class="mono dom">ML</td></tr>
+              <tr data-domain="ai"><td class="mono idx"></td><td class="cap">AI Engineering</td><td class="mono tools">LANGGRAPH / LANGCHAIN / LLM APIS / RAG / CHROMADB / MULTI-AGENT</td><td class="mono dom">AI</td></tr>
+              <tr data-domain="ml"><td class="mono idx"></td><td class="cap">Forecasting</td><td class="mono tools">ARIMA / PROPHET / TIME SERIES / NDCG &amp; RANKING</td><td class="mono dom">ML</td></tr>
+              <tr data-domain="eng"><td class="mono idx"></td><td class="cap">Languages</td><td class="mono tools">PYTHON / SQL / SCALA / JAVA / R / JAVASCRIPT</td><td class="mono dom">ENG</td></tr>
+              <tr data-domain="data"><td class="mono idx"></td><td class="cap">Cloud &amp; Ops</td><td class="mono tools">AZURE PIPELINES / LOGIC APPS / GCP COMPOSER / GIT</td><td class="mono dom">DATA</td></tr>
+              <tr data-domain="data"><td class="mono idx"></td><td class="cap">Analytics &amp; BI</td><td class="mono tools">PANDAS / TABLEAU / POWER BI / OPTIMIZATION</td><td class="mono dom">DATA</td></tr>
+              <tr data-domain="ml"><td class="mono idx"></td><td class="cap">Computer Vision</td><td class="mono tools">OPENCV / SIGNAL PROCESSING / rPPG</td><td class="mono dom">ML</td></tr>
+              <tr data-domain="eng"><td class="mono idx"></td><td class="cap">Full-stack</td><td class="mono tools">REACT / ANGULAR / FLASK / SPRING BOOT / MONGODB</td><td class="mono dom">ENG</td></tr>
+            </tbody>
+          </table>
+          <p class="nb-shape mono">[<span class="row-count">9</span> rows x 3 columns]</p>
+        </div>
       </div>
     </section>
 
-    <section id="education" class="section reveal">
-      <h2 class="section-title"><span class="section-num">03</span> Education</h2>
-      <div class="timeline">
-        <article class="timeline-item reveal">
-          <div class="timeline-marker"></div>
-          <div class="timeline-content">
-            <span class="timeline-date">Expected Dec 2026</span>
-            <h3>M.S. in Data Science &amp; Business Analytics (MSBA)</h3>
-            <p class="timeline-company">UCLA Anderson School of Management · Los Angeles, CA</p>
-            <p class="timeline-detail">Coursework: Machine Learning, Data Management, Optimization, Probability &amp; Statistics, Prescriptive Modeling, Forecasting &amp; Time Series, Data Visualization.</p>
+    <!-- ===== 04 Projects ===== -->
+    <section id="projects" class="section">
+      <div class="section-label mono reveal"><span>04 — PROJECTS</span><span><a href="https://github.com/vishw094" target="_blank" rel="noopener">ALL ON GITHUB ↗</a></span></div>
+      <h2 class="big-head reveal">Things I've <mark>built</mark>.</h2>
+
+      <div class="proj-grid">
+        <!-- 01 -->
+        <article class="proj sketch-box reveal">
+          <div class="proj-viz mono" aria-hidden="true">
+            <div class="flow">
+              <span class="node">SHIPMENT FEED</span><span class="arr">→</span>
+              <span class="node">WEATHER RISK</span><span class="arr">→</span>
+              <span class="node hot">ALLOCATE</span><span class="arr">→</span>
+              <span class="node">48H PLAN</span>
+            </div>
+            <div class="flow sub">
+              <span class="node ghost">LLM AUDIT ⟲ POLICY</span><span class="arr">→</span><span class="node ok">✓ EMAILED</span>
+            </div>
           </div>
+          <p class="proj-meta mono"><span>(01) SEEWEES</span><span class="badge live">LATEST</span></p>
+          <h3 class="proj-title">Medicine dispatch that <em>audits itself</em>.</h3>
+          <p class="proj-desc">A multi-agent system for time-critical medicine dispatch: scores weather risk across nine waypoints, allocates trucks and drivers under a penalty model, drafts a 48-hour plan, then self-checks it before sending a leadership-ready report.</p>
+          <p class="proj-tags mono">LANGGRAPH / LANGCHAIN / GPT-4.1-MINI / CHROMADB</p>
+          <details class="proj-more">
+            <summary class="mono">DETAILS <span>+</span></summary>
+            <div>
+              <p><b class="mono">MOTIVATION</b> Late medicine is worse than no plan. Dispatchers need a plan they can trust in minutes, not a spreadsheet to reconcile.</p>
+              <p><b class="mono">HOW</b> Ingests a 14-day shipment feed, routes through specialist agents (risk, allocation, planning), and loops an LLM-plus-policy auditor until the plan passes before emailing it.</p>
+            </div>
+          </details>
+          <a class="proj-link mono" href="https://github.com/vishw094/SeeWeeS-Ops-Reporting-Agent" target="_blank" rel="noopener">CODE ↗</a>
         </article>
-        <article class="timeline-item reveal">
-          <div class="timeline-marker"></div>
-          <div class="timeline-content">
-            <span class="timeline-date">Jun 2025</span>
-            <h3>B.Tech in Computer Science &amp; Engineering</h3>
-            <p class="timeline-company">Sardar Vallabhbhai National Institute of Technology (SVNIT) · Surat, India</p>
-            <p class="timeline-detail">Coursework: Data Science, Big Data Analytics, Software Engineering, Machine Learning, Statistics, Natural Language Processing, Artificial Intelligence.</p>
+
+        <!-- 02 -->
+        <article class="proj sketch-box reveal">
+          <div class="proj-viz mono" aria-hidden="true">
+            <div class="medallion">
+              <span class="m bronze">BRONZE</span><span class="arr">→</span>
+              <span class="m silver">SILVER</span><span class="arr">→</span>
+              <span class="m gold">GOLD</span>
+            </div>
+            <p class="viz-note">PYSPARK · AIRFLOW · SNOWFLAKE / DUCKDB</p>
           </div>
+          <p class="proj-meta mono"><span>(02) FOURTH DOWN ETL</span></p>
+          <h3 class="proj-title">Should they <em>go for it</em>? Ask the weather.</h3>
+          <p class="proj-desc">An NFL × weather analytics pipeline on fourth-down behaviour: PySpark bronze-to-gold ETL orchestrated by Airflow (GCP Composer or local), loaded to Snowflake or DuckDB, with a Tableau dashboard on top.</p>
+          <p class="proj-tags mono">PYSPARK / AIRFLOW / SNOWFLAKE / TABLEAU</p>
+          <details class="proj-more">
+            <summary class="mono">DETAILS <span>+</span></summary>
+            <div>
+              <p><b class="mono">MOTIVATION</b> Fourth-down calls are high stakes and noisy. Joining play-by-play with game-time weather makes the conditions behind each decision visible.</p>
+              <p><b class="mono">HOW</b> Medallion layers keep raw, cleaned and modelled data separate so the dashboard always reads from a validated gold table.</p>
+            </div>
+          </details>
+          <a class="proj-link mono" href="https://github.com/vishw094/Fourth-Down-ETL" target="_blank" rel="noopener">CODE ↗</a>
         </article>
+
+        <!-- 03 -->
+        <article class="proj sketch-box reveal">
+          <div class="proj-viz mono" aria-hidden="true">
+            <svg class="lightcurve" viewBox="0 0 300 70" preserveAspectRatio="none">
+              <path filter="url(#rough)" d="M0 30 L40 30 L44 29 L80 31 L96 30 L100 52 L108 52 L112 30 L170 30 L210 31 L214 52 L222 52 L226 30 L300 30" fill="none" stroke="currentColor" stroke-width="2" />
+            </svg>
+            <p class="viz-note">KEPLER FLUX · TRANSIT DIP → <b>PLANET</b> · ACC 97.85%</p>
+          </div>
+          <p class="proj-meta mono"><span>(03) EXOPLANET DISCOVERY</span></p>
+          <h3 class="proj-title">Finding planets in <em>a dip of light</em>.</h3>
+          <p class="proj-desc">An end-to-end ML pipeline on NASA's Kepler dataset. A Flask app serves CNN and CNN+LSTM models that reach 97.85% accuracy while cutting processing time by 15%.</p>
+          <p class="proj-tags mono">TENSORFLOW / CNN+LSTM / FLASK</p>
+          <a class="proj-link mono" href="https://github.com/vishw094/ExoplanetDiscovery" target="_blank" rel="noopener">CODE ↗</a>
+        </article>
+
+        <!-- 04 -->
+        <article class="proj sketch-box reveal">
+          <div class="proj-viz mono" aria-hidden="true">
+            <div class="bars">
+              <i style="--h:38%"></i><i style="--h:52%"></i><i style="--h:44%"></i><i style="--h:63%"></i><i style="--h:58%"></i><i style="--h:71%"></i><i class="f" style="--h:78%"></i><i class="f" style="--h:84%"></i>
+            </div>
+            <p class="viz-note">ACTUAL ▮ &nbsp; FORECAST <b>▮</b> · DAY / WEEK / MONTH</p>
+          </div>
+          <p class="proj-meta mono"><span>(04) SALES VISION</span></p>
+          <h3 class="proj-title">Next month's sales, <em>before next month</em>.</h3>
+          <p class="proj-desc">A full-stack forecasting dashboard: Flask + MongoDB backend running ARIMA and Prophet, with a React front end that breaks trends down by day, week and month.</p>
+          <p class="proj-tags mono">ARIMA / PROPHET / FLASK / REACT / MONGODB</p>
+          <a class="proj-link mono" href="https://github.com/vishw094/Sales-Vision" target="_blank" rel="noopener">CODE ↗</a>
+        </article>
+      </div>
+
+      <p class="mono more-title reveal">MORE PROJECTS</p>
+      <ol class="more-list">
+        <li class="reveal">
+          <span class="mono more-num">(05)</span>
+          <div class="more-main"><h3>Starbucks Recommender</h3><p>Built for Starbucks at UCLA Anderson: takes a user request and returns ranked recommendations optimized for NDCG.</p></div>
+          <a class="mono" href="https://github.com/vishw094/Starbucks-Recommender" target="_blank" rel="noopener">CODE ↗</a>
+        </li>
+        <li class="reveal">
+          <span class="mono more-num">(06)</span>
+          <div class="more-main"><h3>Heart Rate via rPPG</h3><p>Heart rate from a plain webcam using remote photoplethysmography and a Gaussian pyramid, ~5 BPM MAE against ECG.</p></div>
+          <a class="mono" href="https://github.com/vishw094/Heart-Rate-Calculation-using-Remote-Photoplethysmography" target="_blank" rel="noopener">CODE ↗</a>
+        </li>
+        <li class="reveal">
+          <span class="mono more-num">(07)</span>
+          <div class="more-main"><h3>Resume Screener</h3><p>TensorFlow + XGBoost with NLP feature extraction to surface qualified candidates.</p></div>
+          <a class="mono" href="https://github.com/vishw094/Resume-screener" target="_blank" rel="noopener">CODE ↗</a>
+        </li>
+        <li class="reveal">
+          <span class="mono more-num">(08)</span>
+          <div class="more-main"><h3>SARS-CoV-2 Mutations with NLP</h3><p>Research applying language models to capture mutation patterns in the SARS-CoV-2 genome.</p></div>
+          <a class="mono" href="https://github.com/vishw094/Capturing_SARS_CoV_2_Mutations_with_NLP" target="_blank" rel="noopener">CODE ↗</a>
+        </li>
+      </ol>
+    </section>
+
+    <!-- ===== 05 Approach ===== -->
+    <section id="approach" class="band band-blue">
+      <div class="band-inner">
+        <div class="section-label mono reveal"><span>05 — APPROACH</span><span>HOW I WORK</span></div>
+        <h2 class="big-head reveal">Five <mark>rules</mark>.</h2>
+        <ol class="rules">
+          <li class="reveal"><span class="mono rule-n">01</span><div><h3>Start from the decision</h3><p>Before I touch the data I ask what someone will do differently with the answer. If nothing changes, it's not the right question yet.</p></div></li>
+          <li class="reveal"><span class="mono rule-n">02</span><div><h3>Pipelines before models</h3><p>A model is only as good as the data that reaches it, on time, every day. I make the boring part reliable first.</p></div></li>
+          <li class="reveal"><span class="mono rule-n">03</span><div><h3>Beat the baseline first</h3><p>The simple model sets the bar. Fancy architecture has to earn its place against it.</p></div></li>
+          <li class="reveal"><span class="mono rule-n">04</span><div><h3>Production is the test set</h3><p>Holdout accuracy is a start. Success rate in production, and whether people come back, is the proof.</p></div></li>
+          <li class="reveal"><span class="mono rule-n">05</span><div><h3>Explain the why</h3><p>A number isn't an answer until it says why it moved and what to do about it.</p></div></li>
+        </ol>
       </div>
     </section>
 
-    <section id="skills" class="section reveal">
-      <h2 class="section-title"><span class="section-num">04</span> Skills</h2>
-      <div class="skill-bars reveal">
-        <div class="skill-bar-item">
-          <div class="skill-bar-label">
-            <span>Python &amp; Data</span>
-            <span class="skill-bar-pct">90%</span>
-          </div>
-          <div class="skill-bar-track"><div class="skill-bar-fill" data-pct="90"></div></div>
-        </div>
-        <div class="skill-bar-item">
-          <div class="skill-bar-label">
-            <span>ML &amp; MLOps</span>
-            <span class="skill-bar-pct">85%</span>
-          </div>
-          <div class="skill-bar-track"><div class="skill-bar-fill" data-pct="85"></div></div>
-        </div>
-        <div class="skill-bar-item">
-          <div class="skill-bar-label">
-            <span>Data Pipelines &amp; Cloud</span>
-            <span class="skill-bar-pct">80%</span>
-          </div>
-          <div class="skill-bar-track"><div class="skill-bar-fill" data-pct="80"></div></div>
-        </div>
-        <div class="skill-bar-item">
-          <div class="skill-bar-label">
-            <span>Full-stack &amp; Tools</span>
-            <span class="skill-bar-pct">75%</span>
-          </div>
-          <div class="skill-bar-track"><div class="skill-bar-fill" data-pct="75"></div></div>
-        </div>
-      </div>
-      <h3 class="skills-subtitle">Tools I reach for</h3>
-      <div class="skills-grid reveal-children">
-        <span class="skill-tag">Python</span>
-        <span class="skill-tag">Java</span>
-        <span class="skill-tag">SQL</span>
-        <span class="skill-tag">R</span>
-        <span class="skill-tag">Scala</span>
-        <span class="skill-tag">JavaScript</span>
-        <span class="skill-tag">Airflow</span>
-        <span class="skill-tag">PySpark</span>
-        <span class="skill-tag">TensorFlow</span>
-        <span class="skill-tag">XGBoost</span>
-        <span class="skill-tag">Scikit-learn</span>
-        <span class="skill-tag">Pandas</span>
-        <span class="skill-tag">LangChain</span>
-        <span class="skill-tag">LangGraph</span>
-        <span class="skill-tag">LLMs</span>
-        <span class="skill-tag">React</span>
-        <span class="skill-tag">Flask</span>
-        <span class="skill-tag">Angular</span>
-        <span class="skill-tag">MongoDB</span>
-        <span class="skill-tag">Azure</span>
-        <span class="skill-tag">Google Cloud</span>
-        <span class="skill-tag">Git</span>
-        <span class="skill-tag">Power BI</span>
-      </div>
-    </section>
+    <!-- ===== 06 Contact ===== -->
+    <section id="contact" class="section contact">
+      <div class="section-label mono reveal"><span>06 — CONTACT</span><span>OPEN TO DATA &amp; ML ROLES</span></div>
+      <h2 class="big-head reveal">Say <mark>hello</mark>.</h2>
+      <p class="lead reveal">Hiring for data science, ML engineering or analytics? Or just want to talk pipelines? My inbox is open.</p>
 
-    <section id="projects" class="section reveal">
-      <h2 class="section-title"><span class="section-num">05</span> Projects</h2>
-      <p class="section-lead">A few things I've built recently. There's more on my <a href="https://github.com/vishw094" target="_blank" rel="noopener">GitHub</a>.</p>
-      <div class="projects-grid">
-        <article class="project-card project-card-featured">
-          <div class="project-top">
-            <span class="project-icon" aria-hidden="true">🤖</span>
-            <span class="project-badge">Latest</span>
-            <div class="project-links">
-              <a href="https://github.com/vishw094/SeeWeeS-Ops-Reporting-Agent" target="_blank" rel="noopener" aria-label="SeeWeeS Ops Reporting Agent code">GitHub ↗</a>
-            </div>
-          </div>
-          <h3>SeeWeeS Ops Reporting Agent</h3>
-          <p>A multi-agent AI system for time-critical medicine dispatch. It ingests a 14-day shipment feed, scores weather risk across nine waypoints, allocates trucks and drivers under a penalty model, drafts a 48-hour plan, then self-audits it with an LLM-plus-policy loop before emailing a leadership-ready report.</p>
-          <div class="project-tech">
-            <span>LangGraph</span><span>LangChain</span><span>GPT-4.1-mini</span><span>ChromaDB</span><span>Python</span>
-          </div>
-        </article>
-        <article class="project-card">
-          <div class="project-top">
-            <span class="project-icon" aria-hidden="true">☕</span>
-            <div class="project-links">
-              <a href="https://github.com/vishw094/Starbucks-Recommender" target="_blank" rel="noopener" aria-label="Starbucks Recommender code">GitHub ↗</a>
-            </div>
-          </div>
-          <h3>Starbucks Recommender</h3>
-          <p>A recommender system built for Starbucks at UCLA Anderson. It takes a user request and returns ranked recommendations optimized for NDCG.</p>
-          <div class="project-tech"><span>Python</span><span>Recommenders</span><span>NDCG</span></div>
-        </article>
-        <article class="project-card">
-          <div class="project-top">
-            <span class="project-icon" aria-hidden="true">🏈</span>
-            <div class="project-links">
-              <a href="https://github.com/vishw094/Fourth-Down-ETL" target="_blank" rel="noopener" aria-label="Fourth Down ETL code">GitHub ↗</a>
-            </div>
-          </div>
-          <h3>Fourth Down ETL</h3>
-          <p>An NFL x weather analytics pipeline studying fourth-down behavior: PySpark bronze to gold ETL on Airflow (GCP Composer or local), loading to Snowflake or DuckDB, with a Tableau dashboard on top.</p>
-          <div class="project-tech"><span>PySpark</span><span>Airflow</span><span>Snowflake</span><span>Tableau</span></div>
-        </article>
-        <article class="project-card">
-          <div class="project-top">
-            <span class="project-icon" aria-hidden="true">🪐</span>
-            <div class="project-links">
-              <a href="https://github.com/vishw094/ExoplanetDiscovery" target="_blank" rel="noopener" aria-label="Exoplanet Discovery code">GitHub ↗</a>
-            </div>
-          </div>
-          <h3>Exoplanet Discovery</h3>
-          <p>An end-to-end ML pipeline that detects exoplanets from NASA's Kepler dataset. A Flask app with CNN and CNN+LSTM models reaches 97.85% accuracy while cutting processing time by 15%.</p>
-          <div class="project-tech"><span>TensorFlow</span><span>CNN+LSTM</span><span>Flask</span></div>
-        </article>
-        <article class="project-card">
-          <div class="project-top">
-            <span class="project-icon" aria-hidden="true">❤️</span>
-            <div class="project-links">
-              <a href="https://github.com/vishw094/Heart-Rate-Calculation-using-Remote-Photoplethysmography" target="_blank" rel="noopener" aria-label="Heart Rate via rPPG code">GitHub ↗</a>
-            </div>
-          </div>
-          <h3>Heart Rate via rPPG</h3>
-          <p>Estimates heart rate from a plain webcam using remote photoplethysmography and a Gaussian pyramid, with about 5 BPM mean absolute error against ECG.</p>
-          <div class="project-tech"><span>OpenCV</span><span>Signal Processing</span><span>Python</span></div>
-        </article>
-        <article class="project-card">
-          <div class="project-top">
-            <span class="project-icon" aria-hidden="true">📈</span>
-            <div class="project-links">
-              <a href="https://github.com/vishw094/Sales-Vision" target="_blank" rel="noopener" aria-label="Sales Vision code">GitHub ↗</a>
-            </div>
-          </div>
-          <h3>Sales Vision</h3>
-          <p>A full-stack sales-forecasting dashboard: a Flask + MongoDB backend running ARIMA and Prophet, with a React front end that breaks trends down by day, week, and month.</p>
-          <div class="project-tech"><span>ARIMA</span><span>Prophet</span><span>Flask</span><span>React</span><span>MongoDB</span></div>
-        </article>
-        <article class="project-card">
-          <div class="project-top">
-            <span class="project-icon" aria-hidden="true">📄</span>
-            <div class="project-links">
-              <a href="https://github.com/vishw094/Resume-screener" target="_blank" rel="noopener" aria-label="Resume Screener code">GitHub ↗</a>
-            </div>
-          </div>
-          <h3>Resume Screener</h3>
-          <p>An ML model that screens resumes and surfaces qualified candidates, combining TensorFlow and XGBoost with NLP-based feature extraction.</p>
-          <div class="project-tech"><span>TensorFlow</span><span>XGBoost</span><span>NLP</span></div>
-        </article>
-        <article class="project-card">
-          <div class="project-top">
-            <span class="project-icon" aria-hidden="true">🧬</span>
-            <div class="project-links">
-              <a href="https://github.com/vishw094/Capturing_SARS_CoV_2_Mutations_with_NLP" target="_blank" rel="noopener" aria-label="SARS-CoV-2 NLP code">GitHub ↗</a>
-            </div>
-          </div>
-          <h3>SARS-CoV-2 Mutations with NLP</h3>
-          <p>A research project applying natural language processing to analyze and capture mutation patterns in the SARS-CoV-2 genome.</p>
-          <div class="project-tech"><span>NLP</span><span>Research</span><span>Python</span></div>
-        </article>
-      </div>
-    </section>
+      <a href="mailto:vishwvekariya@gmail.com" class="email mono reveal" data-text="VISHWVEKARIYA@GMAIL.COM">VISHWVEKARIYA@GMAIL.COM</a>
 
-    <section id="contact" class="section contact-section reveal">
-      <h2 class="section-title"><span class="section-num">06</span> Contact</h2>
-      <p class="contact-intro">
-        I'm open to roles in data science, ML engineering, and analytics. If something here
-        resonates, or you just want to talk shop, my inbox is always open.
-      </p>
-      <a href="mailto:vishwvekariya@gmail.com" class="contact-cta">Say hello →</a>
-      <div class="contact-links">
-        <a href="mailto:vishwvekariya@gmail.com">Email</a>
+      <div class="contact-row mono reveal">
+        <a href="https://linkedin.com/in/vishw-vekariya" target="_blank" rel="noopener">LINKEDIN ↗</a>
+        <a href="https://github.com/vishw094" target="_blank" rel="noopener">GITHUB ↗</a>
+        <a href="Vishw_Resume.pdf" target="_blank" rel="noopener">RESUME ↗</a>
         <a href="tel:+12137738436">(213) 773-8436</a>
-        <a href="https://linkedin.com/in/vishw-vekariya" target="_blank" rel="noopener">LinkedIn</a>
-        <a href="https://github.com/vishw094" target="_blank" rel="noopener">GitHub</a>
       </div>
+
+      <svg class="plane" viewBox="0 0 120 60" aria-hidden="true">
+        <g filter="url(#rough)" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round">
+          <path d="M8 30 L110 8 L70 52 L58 36 Z" />
+          <path d="M58 36 L110 8" />
+          <path class="trail" d="M8 30 C-20 34, -30 50, -60 46" stroke-dasharray="4 6" />
+        </g>
+      </svg>
     </section>
   </main>
 
-  <footer class="footer">
-    <p class="footer-line">Designed &amp; built by hand with HTML, CSS, and a little JavaScript.</p>
-    <p>© <span id="year"></span> Vishw Vekariya · Los Angeles, CA</p>
+  <footer class="footer mono">
+    <span>© <span class="year"></span> VISHW VEKARIYA</span>
+    <span>LOS ANGELES, CA</span>
+    <span>BUILT BY HAND · HTML / CSS / JS</span>
   </footer>
 
   <script src="script.js"></script>
