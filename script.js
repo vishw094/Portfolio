@@ -229,31 +229,59 @@
     reveals.forEach(function (el) { el.classList.add("revealed"); });
   }
 
-  // ----- Optional visit notification (set a Formspree ID in index.html to enable) -----
+  // ----- Visit notification email (set a Formspree ID in index.html to enable) -----
+  // Visit the site once with ?me to stop getting emails for your own visits on that browser,
+  // and ?me=off to turn emails back on.
   (function () {
     var meta = document.querySelector('meta[name="formspree-form-id"]');
     var formId = meta ? meta.getAttribute("content") : "";
     if (!formId || formId === "YOUR_FORM_ID") return;
+    var host = location.hostname;
+    if (host === "localhost" || host === "127.0.0.1" || location.protocol === "file:") return;
     try {
+      var q = new URLSearchParams(location.search);
+      if (q.has("me")) {
+        if (q.get("me") === "off") localStorage.removeItem("isOwner");
+        else localStorage.setItem("isOwner", "1");
+      }
+      if (localStorage.getItem("isOwner")) return;
       if (sessionStorage.getItem("visitNotified")) return;
       sessionStorage.setItem("visitNotified", "1");
     } catch (e) { return; }
-    function sendVisit(data) {
+
+    function sendVisit(d) {
+      d = d || {};
+      var place = [d.city, d.region, d.postal].filter(Boolean).join(", ");
+      var where = place ? place + (d.country_name ? " (" + d.country_name + ")" : "") : (d.country_name || "an unknown location");
+      var ref = document.referrer ? document.referrer : "Direct / typed URL";
+      var now = new Date();
       fetch("https://formspree.io/f/" + formId, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", "Accept": "application/json" },
         body: JSON.stringify({
-          _subject: "Portfolio visitor - " + (data.city || data.country_name || "Unknown"),
+          _subject: "Someone viewed your portfolio from " + (d.city ? d.city + (d.region_code ? ", " + d.region_code : "") : (d.country_name || "somewhere")),
           message: [
-            "New visit to your portfolio", "",
-            "Location: " + (data.city ? data.city + ", " : "") + (data.region || "") + " " + (data.country_name || ""),
-            "Time: " + new Date().toISOString(),
-            "User agent: " + (navigator.userAgent || "-")
+            "Someone just viewed your portfolio.",
+            "",
+            "Location: " + where,
+            "City: " + (d.city || "-"),
+            "ZIP / postal code: " + (d.postal || "-"),
+            "Region: " + (d.region || "-"),
+            "Country: " + (d.country_name || "-"),
+            "Network / company: " + (d.org || "-"),
+            "Came from: " + ref,
+            "Page: " + location.href,
+            "Time: " + now.toLocaleString("en-US", { timeZone: "America/Los_Angeles" }) + " (Los Angeles time)",
+            "Device: " + (/Mobi|Android/i.test(navigator.userAgent) ? "Phone" : "Desktop") + " - " + (navigator.userAgent || "-"),
+            "",
+            "Location is estimated from the visitor's internet connection, so city and ZIP are approximate."
           ].join("\n")
         })
       }).catch(function () {});
     }
-    fetch("https://ipapi.co/json/").then(function (r) { return r.json(); }).then(sendVisit)
-      .catch(function () { sendVisit({ country_name: "Unknown" }); });
+    fetch("https://ipapi.co/json/")
+      .then(function (r) { return r.json(); })
+      .then(function (d) { sendVisit(d && !d.error ? d : {}); })
+      .catch(function () { sendVisit({}); });
   })();
 })();
