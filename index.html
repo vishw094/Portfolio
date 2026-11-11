@@ -120,8 +120,9 @@
             messy ingestion at the bottom, a model that holds up in the middle, and a story at the top that a team can act on.
           </p>
           <p class="reveal">
-            I'm finishing an <strong>MS in Business Analytics at UCLA Anderson</strong> (Dec 2026). Before that I was a data engineer at
-            MAQ Software on <strong>LinkedIn's flagship backend</strong>, building Airflow DAGs in Scala and PySpark. Along the way I've
+            I'm finishing an <strong>MS in Business Analytics at UCLA Anderson</strong> (Dec 2026) and working as an
+            <strong>AI Data Engineer at Capex Funds</strong>, where I own the data platform behind an investor-matching product.
+            Before that I was a data engineer at MAQ Software on <strong>LinkedIn's flagship backend</strong>, building Airflow DAGs in Scala and PySpark. Along the way I've
             shipped models for <span class="mono-chip">RESUME SCREENING<sup>01</sup></span>, <span class="mono-chip">STOCK FORECASTING<sup>02</sup></span>,
             <span class="mono-chip">EXOPLANET DETECTION<sup>03</sup></span> and a <span class="mono-chip">MULTI-AGENT OPS PLANNER<sup>04</sup></span>.
           </p>
@@ -169,7 +170,7 @@
 
     <!-- ===== 02 Experience ===== -->
     <section id="experience" class="section">
-      <div class="section-label mono reveal"><span>02 — EXPERIENCE</span><span>3 ROLES · 2023—2025</span></div>
+      <div class="section-label mono reveal"><span>02 — EXPERIENCE</span><span>4 ROLES · 2023—NOW</span></div>
       <h2 class="big-head reveal">Where I've <mark>shipped</mark>.</h2>
 
       <div class="term reveal">
@@ -179,6 +180,25 @@
       <ol class="xp-list">
         <li class="xp reveal is-open">
           <button class="xp-row" type="button" aria-expanded="true">
+            <span class="xp-hash mono">9b2e6f4</span>
+            <span class="xp-main">
+              <span class="xp-role">AI Data Engineer</span>
+              <span class="xp-org mono">CAPEX FUNDS · LOS ANGELES</span>
+            </span>
+            <span class="xp-date mono">2026.06—NOW</span>
+            <span class="xp-plus" aria-hidden="true">+</span>
+          </button>
+          <div class="xp-body">
+            <ul>
+              <li>Own the <b>full data platform</b> behind an investor-matching product: a <b>four-layer PostgreSQL warehouse</b> on Supabase spanning 39 tables and 2.6M rows, with an entity-resolution pipeline that collapses <b>774K multi-source records</b> into a canonical graph of 554K people and 169K organizations, each with a match confidence.</li>
+              <li>Designed a cascading <b>net-worth estimation model</b> that took coverage from <b>15% to 100%</b> of 554K people using SEC Form 4 holdings, Form D equity and dilution-aware ownership, then layered a web-grounded <b>LLM enrichment service</b> with source-tier grading and hallucination guardrails.</li>
+              <li>Built an <b>investor propensity model</b> over 15 weighted features that lifted recall from <b>51% to 69%</b>, recovering 14K known investors and surfacing <b>27K new candidates</b> with no extra data spend; hardened the backend with row-level security on 24 tables and identity-checked RPCs that closed a cross-tenant leak.</li>
+            </ul>
+            <p class="xp-tags mono">POSTGRESQL / SUPABASE / PYTHON / SQL / ENTITY RESOLUTION / LLM ENRICHMENT / DEEPSEEK</p>
+          </div>
+        </li>
+        <li class="xp reveal">
+          <button class="xp-row" type="button" aria-expanded="false">
             <span class="xp-hash mono">a7f3c21</span>
             <span class="xp-main">
               <span class="xp-role">Associate Software Engineer, Data</span>
