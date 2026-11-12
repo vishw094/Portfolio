@@ -25,19 +25,7 @@
   color-scheme: light;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --paper: #15141d;
-    --paper-2: #1e1d29;
-    --ink: #efebe0;
-    --ink-soft: #b4b0c2;
-    --ink-faint: #75718a;
-    --accent: #ff5a8f;
-    --accent-soft: rgba(255, 90, 143, 0.14);
-    --line: rgba(239, 235, 224, 0.16);
-    color-scheme: dark;
-  }
-}
+/* Light is the default; dark only when the visitor picks it with the toggle */
 :root[data-theme="dark"] {
   --paper: #15141d;
   --paper-2: #1e1d29;
@@ -172,10 +160,6 @@ mark { background: none; color: var(--accent); }
 .theme-toggle .i-moon { display: none; }
 :root[data-theme="dark"] .theme-toggle .i-sun { display: none; }
 :root[data-theme="dark"] .theme-toggle .i-moon { display: block; }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .theme-toggle .i-sun { display: none; }
-  :root:not([data-theme="light"]) .theme-toggle .i-moon { display: block; }
-}
 
 .say-hi {
   display: flex;
