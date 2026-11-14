@@ -398,12 +398,12 @@
           </div>
           <p class="proj-meta mono"><span>(05) SONY PICTURES × UCLA ANDERSON</span><span class="badge">SYSTEM DESIGN</span></p>
           <h3 class="proj-title">Does this show get <em>another season</em>?</h3>
-          <p class="proj-desc">My design for an industry seminar run by Sony Pictures: a model that forecasts viewership episode by episode to inform whether a series should be greenlit for its next season. It combines a retention baseline from comparable shows, marketing and scheduling context, and script "buzz" from LLM-simulated viewer personas, used as one input rather than an oracle.</p>
+          <p class="proj-desc">A marketing analytics challenge from Sony Pictures' industry seminar: how should a studio get the most out of a film or show, before and after launch? I took on one of its questions: given a series' history and how its current episodes are performing live, should it be greenlit for another season? My design forecasts each episode's viewership with a confidence range, starting before launch and updating after every episode, so the marketing team has a number to decide with.</p>
           <p class="proj-tags mono">LLM PERSONAS / STATE-SPACE / GRADIENT BOOSTING / HIERARCHICAL BAYES</p>
           <details class="proj-more">
             <summary class="mono">DETAILS <span>+</span></summary>
             <div>
-              <p><b class="mono">MOTIVATION</b> Renewal calls get made early, when only a few episodes have aired. Signals from the scripts can fill that gap, as long as they can't override what audiences actually do.</p>
+              <p><b class="mono">MOTIVATION</b> Marketing and renewal calls get made early: pre-launch with no audience data at all, and post-launch after only a few episodes. Signals from the scripts can fill that gap, as long as they never override what audiences actually do. Inputs include a retention baseline from comparable shows, promo spend and scheduling, and script "buzz" from AI-simulated viewers.</p>
               <p><b class="mono">HOW</b> Scripts are scored for cliffhangers, twists and emotional arc. Persona cards such as the twist-seeker, the binger and the Reddit analyst produce varied, de-duplicated reactions that roll up into buzz, polarization and drop-risk features. An ensemble of a baseline retention curve, gradient-boosted trees, state-space and hierarchical Bayesian models then reforecasts after every episode with confidence intervals. If the LLM features don't beat the baseline in backtests, they're dropped.</p>
             </div>
           </details>
