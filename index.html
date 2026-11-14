@@ -381,27 +381,55 @@
           <p class="proj-tags mono">ARIMA / PROPHET / FLASK / REACT / MONGODB</p>
           <a class="proj-link mono" href="https://github.com/vishw094/Sales-Vision" target="_blank" rel="noopener">CODE ↗</a>
         </article>
+
+        <!-- 05 -->
+        <article class="proj proj-wide sketch-box reveal">
+          <div class="proj-viz mono" aria-hidden="true">
+            <div class="flow">
+              <span class="node">SCRIPT</span><span class="arr">→</span>
+              <span class="node">LLM PERSONAS</span><span class="arr">→</span>
+              <span class="node hot">BUZZ FEATURES</span>
+            </div>
+            <div class="flow sub">
+              <span class="node ghost">COMPS + MARKETING + LAGS</span><span class="arr">→</span>
+              <span class="node">ENSEMBLE</span><span class="arr">→</span>
+              <span class="node ok">EP k FORECAST ± CI</span>
+            </div>
+          </div>
+          <p class="proj-meta mono"><span>(05) SONY PICTURES × UCLA ANDERSON</span><span class="badge">SYSTEM DESIGN</span></p>
+          <h3 class="proj-title">Does this show get <em>another season</em>?</h3>
+          <p class="proj-desc">My design for an industry seminar run by Sony Pictures: a model that forecasts viewership episode by episode to inform whether a series should be greenlit for its next season. It combines a retention baseline from comparable shows, marketing and scheduling context, and script "buzz" from LLM-simulated viewer personas, used as one input rather than an oracle.</p>
+          <p class="proj-tags mono">LLM PERSONAS / STATE-SPACE / GRADIENT BOOSTING / HIERARCHICAL BAYES</p>
+          <details class="proj-more">
+            <summary class="mono">DETAILS <span>+</span></summary>
+            <div>
+              <p><b class="mono">MOTIVATION</b> Renewal calls get made early, when only a few episodes have aired. Signals from the scripts can fill that gap, as long as they can't override what audiences actually do.</p>
+              <p><b class="mono">HOW</b> Scripts are scored for cliffhangers, twists and emotional arc. Persona cards such as the twist-seeker, the binger and the Reddit analyst produce varied, de-duplicated reactions that roll up into buzz, polarization and drop-risk features. An ensemble of a baseline retention curve, gradient-boosted trees, state-space and hierarchical Bayesian models then reforecasts after every episode with confidence intervals. If the LLM features don't beat the baseline in backtests, they're dropped.</p>
+            </div>
+          </details>
+          <p class="proj-link mono proj-note">HIGH-LEVEL DESIGN · NO DATA PROVIDED, NOT IMPLEMENTED</p>
+        </article>
       </div>
 
       <p class="mono more-title reveal">MORE PROJECTS</p>
       <ol class="more-list">
         <li class="reveal">
-          <span class="mono more-num">(05)</span>
+          <span class="mono more-num">(06)</span>
           <div class="more-main"><h3>Starbucks Recommender</h3><p>Built for Starbucks at UCLA Anderson: takes a user request and returns ranked recommendations optimized for NDCG.</p></div>
           <a class="mono" href="https://github.com/vishw094/Starbucks-Recommender" target="_blank" rel="noopener">CODE ↗</a>
         </li>
         <li class="reveal">
-          <span class="mono more-num">(06)</span>
+          <span class="mono more-num">(07)</span>
           <div class="more-main"><h3>Heart Rate via rPPG</h3><p>Heart rate from a plain webcam using remote photoplethysmography and a Gaussian pyramid, ~5 BPM MAE against ECG.</p></div>
           <a class="mono" href="https://github.com/vishw094/Heart-Rate-Calculation-using-Remote-Photoplethysmography" target="_blank" rel="noopener">CODE ↗</a>
         </li>
         <li class="reveal">
-          <span class="mono more-num">(07)</span>
+          <span class="mono more-num">(08)</span>
           <div class="more-main"><h3>Resume Screener</h3><p>TensorFlow + XGBoost with NLP feature extraction to surface qualified candidates.</p></div>
           <a class="mono" href="https://github.com/vishw094/Resume-screener" target="_blank" rel="noopener">CODE ↗</a>
         </li>
         <li class="reveal">
-          <span class="mono more-num">(08)</span>
+          <span class="mono more-num">(09)</span>
           <div class="more-main"><h3>SARS-CoV-2 Mutations with NLP</h3><p>Research applying language models to capture mutation patterns in the SARS-CoV-2 genome.</p></div>
           <a class="mono" href="https://github.com/vishw094/Capturing_SARS_CoV_2_Mutations_with_NLP" target="_blank" rel="noopener">CODE ↗</a>
         </li>
