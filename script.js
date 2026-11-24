@@ -237,6 +237,9 @@
     if (!formId || formId === "YOUR_FORM_ID") return;
     var host = location.hostname;
     if (host === "localhost" || host === "127.0.0.1" || location.protocol === "file:") return;
+    // Skip automated visitors: headless browsers, crawlers and link-preview scanners
+    // (Outlook, Teams, LinkedIn and Slack open shared links) would each use up a submission.
+    if (navigator.webdriver || /bot|crawl|spider|slurp|headless|preview|lighthouse|pagespeed/i.test(navigator.userAgent || "")) return;
     try {
       var q = new URLSearchParams(location.search);
       if (q.has("me")) {
@@ -245,7 +248,6 @@
       }
       if (localStorage.getItem("isOwner")) return;
       if (sessionStorage.getItem("visitNotified")) return;
-      sessionStorage.setItem("visitNotified", "1");
     } catch (e) { return; }
 
     function sendVisit(d) {
@@ -278,9 +280,19 @@
         })
       }).catch(function () {});
     }
-    fetch("https://ipapi.co/json/")
-      .then(function (r) { return r.json(); })
-      .then(function (d) { sendVisit(d && !d.error ? d : {}); })
-      .catch(function () { sendVisit({}); });
+    // Only notify once a person actually interacts with the page. Scanners load it and leave.
+    var EVENTS = ["scroll", "pointermove", "pointerdown", "touchstart", "keydown"];
+    function onHuman() {
+      EVENTS.forEach(function (ev) { window.removeEventListener(ev, onHuman, true); });
+      try {
+        if (sessionStorage.getItem("visitNotified")) return;
+        sessionStorage.setItem("visitNotified", "1");
+      } catch (e) { return; }
+      fetch("https://ipapi.co/json/")
+        .then(function (r) { return r.json(); })
+        .then(function (d) { sendVisit(d && !d.error ? d : {}); })
+        .catch(function () { sendVisit({}); });
+    }
+    EVENTS.forEach(function (ev) { window.addEventListener(ev, onHuman, { capture: true, passive: true }); });
   })();
 })();
