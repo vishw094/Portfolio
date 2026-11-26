@@ -46,12 +46,8 @@ Your site will be at: **https://vishw094.github.io/Portfolio/**
 
 ---
 
-### Optional: Email when someone visits (with their location)
+### Optional: Log visits to a Google Sheet (with their location)
 
-1. Go to [formspree.io](https://formspree.io) and sign up (free).
-2. Create a new form. Formspree will give you a form ID (e.g. `mvoeqyab`).
-3. In **index.html**, find the meta tag:  
-   `<meta name="formspree-form-id" content="YOUR_FORM_ID" />`  
-   Replace `YOUR_FORM_ID` with your Formspree form ID (e.g. `content="mvoeqyab"`).
-4. Deploy. When someone opens your site, you’ll get one email per visitor per session with their approximate location (city/country from IP), IP, time, and user agent.  
-   (Uses [ipapi.co](https://ipapi.co) for location and runs only once per browser session.)
+Each visit becomes a row in a Google Sheet, with a daily summary email. It's free with no monthly cap.
+Setup steps are in [visit-logger/README.md](visit-logger/README.md).
+(Uses [ipapi.co](https://ipapi.co) for approximate location; logs once per browser session, only after the visitor interacts with the page.)

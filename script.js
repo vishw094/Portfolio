@@ -228,17 +228,21 @@
     reveals.forEach(function (el) { el.classList.add("revealed"); });
   }
 
-  // ----- Visit notification email (set a Formspree ID in index.html to enable) -----
-  // Visit the site once with ?me to stop getting emails for your own visits on that browser,
-  // and ?me=off to turn emails back on.
+  // ----- Visit logger (Google Sheet; set the web app URL in index.html to enable) -----
+  // Visit the site once with ?me to stop logging your own visits on that browser,
+  // and ?me=off to log them again.
   (function () {
-    var meta = document.querySelector('meta[name="formspree-form-id"]');
-    var formId = meta ? meta.getAttribute("content") : "";
-    if (!formId || formId === "YOUR_FORM_ID") return;
+    function metaContent(name) {
+      var m = document.querySelector('meta[name="' + name + '"]');
+      return m ? m.getAttribute("content") : "";
+    }
+    var logUrl = metaContent("visit-log-url");
+    var token = metaContent("visit-log-token");
+    if (!/^https:\/\/script\.google\.com\//.test(logUrl)) return;
     var host = location.hostname;
     if (host === "localhost" || host === "127.0.0.1" || location.protocol === "file:") return;
     // Skip automated visitors: headless browsers, crawlers and link-preview scanners
-    // (Outlook, Teams, LinkedIn and Slack open shared links) would each use up a submission.
+    // (Outlook, Teams, LinkedIn and Slack open shared links) would each add a fake visit.
     if (navigator.webdriver || /bot|crawl|spider|slurp|headless|preview|lighthouse|pagespeed/i.test(navigator.userAgent || "")) return;
     try {
       var q = new URLSearchParams(location.search);
@@ -252,31 +256,22 @@
 
     function sendVisit(d) {
       d = d || {};
-      var place = [d.city, d.region, d.postal].filter(Boolean).join(", ");
-      var where = place ? place + (d.country_name ? " (" + d.country_name + ")" : "") : (d.country_name || "an unknown location");
-      var ref = document.referrer ? document.referrer : "Direct / typed URL";
-      var now = new Date();
-      fetch("https://formspree.io/f/" + formId, {
+      // text/plain + no-cors keeps this a simple request: Apps Script web apps don't answer CORS preflights.
+      fetch(logUrl, {
         method: "POST",
-        headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        mode: "no-cors",
+        keepalive: true,
         body: JSON.stringify({
-          _subject: "Someone viewed your portfolio from " + (d.city ? d.city + (d.region_code ? ", " + d.region_code : "") : (d.country_name || "somewhere")),
-          message: [
-            "Someone just viewed your portfolio.",
-            "",
-            "Location: " + where,
-            "City: " + (d.city || "-"),
-            "ZIP / postal code: " + (d.postal || "-"),
-            "Region: " + (d.region || "-"),
-            "Country: " + (d.country_name || "-"),
-            "Network / company: " + (d.org || "-"),
-            "Came from: " + ref,
-            "Page: " + location.href,
-            "Time: " + now.toLocaleString("en-US", { timeZone: "America/Los_Angeles" }) + " (Los Angeles time)",
-            "Device: " + (/Mobi|Android/i.test(navigator.userAgent) ? "Phone" : "Desktop") + " - " + (navigator.userAgent || "-"),
-            "",
-            "Location is estimated from the visitor's internet connection, so city and ZIP are approximate."
-          ].join("\n")
+          token: token,
+          page: location.href,
+          referrer: document.referrer || "Direct / typed URL",
+          city: d.city || "",
+          region: d.region || "",
+          postal: d.postal || "",
+          country: d.country_name || "",
+          org: d.org || "",
+          device: /Mobi|Android/i.test(navigator.userAgent) ? "Phone" : "Desktop",
+          userAgent: navigator.userAgent || ""
         })
       }).catch(function () {});
     }
